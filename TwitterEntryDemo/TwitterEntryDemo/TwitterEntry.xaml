@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TwitterEntryDemo.Convertor;assembly=TwitterEntryDemo"
+             x:Class="TwitterEntryDemo.TwitterEntry"
+             Title="Twitter Entry Demo">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:IntToBooleanConvertor x:Key="IntToBooleanConvertor"></local:IntToBooleanConvertor>
+            <local:IntToColorConvertor x:Key="IntToColorConvertor"></local:IntToColorConvertor>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <StackLayout Orientation="Vertical">
+        <Label Text="Enter your tweet : "></Label>
+        <Label Text="(Minimum 140 characters)"></Label>
+        <Editor x:Name="tweetEditor" HeightRequest="100"></Editor>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="character counter : "></Label>
+            <Label Text="{Binding Source={x:Reference tweetEditor}, Path=Text.Length}" TextColor="{Binding Source={x:Reference tweetEditor}, Path=Text.Length, Converter={StaticResource IntToColorConvertor}, ConverterParameter=140}"></Label>
+        </StackLayout>
+        <Button Text="Send Tweet" IsEnabled="{Binding Source={x:Reference tweetEditor}, Path=Text.Length, Converter={StaticResource IntToBooleanConvertor}, ConverterParameter=140}"></Button>
+    </StackLayout>
+    
+</ContentPage>
